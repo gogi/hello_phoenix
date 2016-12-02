@@ -61,12 +61,14 @@ channel.join()
 
 export default socket
 
-let chatInput = $("chat__input")
-let messages = $("chat__messages")
+let chatInput = document.getElementById("chat__input")
+let messages = document.getElementById("chat__messages")
 
-chatInput.on("keypress", function(event){
-  if (event.keyCode === 13) {
-    channel.push("new_message", {body: chatInput.val()})
-    chatInput.val("")
+console.log(chatInput)
+
+chatInput.addEventListener("keypress", e => {
+  if ((e.which || e.keyCode) === 13) {
+    channel.push("new_message", { body: chatInput.value })
+    chatInput.value = ""
   }
 })
