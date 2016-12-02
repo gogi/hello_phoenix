@@ -1,1 +1,5 @@
-<h3>Let's chat</h3>
+<h3>Let's chat!</h3>
+<div class="chat">
+  <input type="text" class="chat__input">
+  <div class="chat__messages"></div>
+</div>
