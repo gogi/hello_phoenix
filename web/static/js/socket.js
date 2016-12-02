@@ -72,3 +72,9 @@ chatInput.addEventListener("keypress", e => {
     chatInput.value = ""
   }
 })
+
+channel.on("new_message", payload => {
+  let messageContainer = document.createElement("div")
+  messageContainer.innerHTML = payload.body
+  messages.insertBefore(messageContainer, messages.firstChild)
+})
