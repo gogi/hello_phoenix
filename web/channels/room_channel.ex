@@ -8,4 +8,9 @@ defmodule HelloPhoenix.RoomChannel do
   def join(_channel, _message, _socket) do
     {:error, %{reason: "No channel found"}}
   end
+
+  def handle_in("new_message", body, socket) do
+    broadcast!(socket, "new_message", body)
+    {:noreply, socket}
+  end
 end
