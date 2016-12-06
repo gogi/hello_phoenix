@@ -63,6 +63,7 @@ export default socket
 
 let chatInput = document.getElementById("chat__input")
 let messages = document.getElementById("chat__messages")
+let chatTyping = document.getElementById("chat__typing")
 
 console.log(chatInput)
 
@@ -73,8 +74,38 @@ chatInput.addEventListener("keypress", e => {
   }
 })
 
+let typing = false
+let timeout = undefined
+
+function timeoutFunction() {
+  typing = false
+  console.log('not')
+  channel.push("not_typing", {})
+}
+
+chatInput.addEventListener("keydown", e => {
+  if ((e.which || e.keyCode) === 13) {
+    return null
+  }
+  if (!typing) {
+    typing = true
+    channel.push("typing", {})
+  } else {
+    clearTimeout(timeout)
+  }
+  timeout = setTimeout(timeoutFunction, 1000)
+})
+
 channel.on("new_message", payload => {
   let messageContainer = document.createElement("div")
   messageContainer.innerHTML = payload.body
   messages.insertBefore(messageContainer, messages.firstChild)
+})
+
+channel.on("typing", payload => {
+  chatTyping.innerHTML = "typing"
+})
+
+channel.on("not_typing", payload => {
+  chatTyping.innerHTML = ""
 })

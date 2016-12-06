@@ -13,4 +13,14 @@ defmodule HelloPhoenix.RoomChannel do
     broadcast!(socket, "new_message", body)
     {:noreply, socket}
   end
+
+  def handle_in("typing", _body, socket) do
+    broadcast!(socket, "typing", %{})
+    {:noreply, socket}
+  end
+
+  def handle_in("not_typing", _body, socket) do
+    broadcast!(socket, "not_typing", %{})
+    {:noreply, socket}
+  end
 end
